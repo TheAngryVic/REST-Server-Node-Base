@@ -1,5 +1,5 @@
+const { Categoria, Usuario, Producto } = require("../models");
 const Role = require("../models/role")
-const Usuario = require("../models/usuario");
 
 
 const rolValido = async (rol = "") => {
@@ -28,8 +28,54 @@ const existeUsuarioxID = async (id = "")=>{
     }
 }
 
+/**
+ *
+ * Validaciones para categoria  
+ * */
+
+const existeCategoriaxID = async (id = "")=>{
+
+    const existencia = await Categoria.findById(id);
+    if (!existencia) {
+        throw new Error(`El ID: ${id}, no existe`);
+    }
+}
+
+const existeCategoria = async (nombre = "")=>{
+
+    const existencia = await Categoria.findOne({nombre});
+    if (existencia) {
+        throw new Error(`${nombre} ya existe como categoria`);
+    }
+}
+
+/**
+ * Productos
+ */
+
+ const existeProductoxID = async (id = "")=>{
+
+    const existencia = await Producto.findById(id);
+    if (!existencia) {
+        throw new Error(`El ID: ${id}, no existe`);
+    }
+}
+
+const existeProducto = async (nombre = "")=>{
+
+    const existencia = await Producto.findOne({nombre});
+    if (existencia) {
+        throw new Error(`${nombre} ya existe como Producto`);
+    }
+}
+
+
 module.exports ={
     rolValido,
     existeEmail,
-    existeUsuarioxID     
+    existeUsuarioxID,
+    existeCategoria,
+    existeCategoriaxID,
+    existeProductoxID,
+    existeProducto
 }
